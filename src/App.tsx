@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useRef, useState } from "react";
+import GlobalStyles from "./styles/GlobalStyles";
 
-function App() {
+import { select, selectAll } from "d3-selection";
+import DataJoins from "./DataJoins";
+
+const App: React.FC = () => {
+  // telling TS what the svg is (find this information hovering the tag)
+  const svgRef = useRef<SVGSVGElement | null>(null);
+
+  useEffect(() => {
+    // Selected the SVG via useRef, created a rectangle and gave it some properties
+
+    //   select(svgRef.current)
+    //     .append("rect") // creates a rectangle
+    //     .attr("width", 100) // properties
+    //     .attr("height", 100) // properties
+    //     .attr("fill", "blue"); // properties
+
+    // -----------------------------------------------------------------------------//
+
+    // can also be used to select classes, id etc..
+    selectAll("rect")
+      .attr("width", 100)
+      .attr("height", 100)
+      .attr("fill", "blue")
+      .attr("x", (_, index) => index * 100);
+    // give the elements 100 units, so they dont stack on top of each other
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <GlobalStyles />
+      <svg ref={svgRef}>
+        <rect />
+        <rect />
+        <rect />
+      </svg>
+      <DataJoins />
+    </React.Fragment>
   );
-}
-
+};
 export default App;
